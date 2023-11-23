@@ -6,9 +6,11 @@ import { DataContext } from "../../context/DataContext";
 import { useMutation } from "@tanstack/react-query";
 import { sendChat } from "../../controllers/chat";
 import PropTypes from 'prop-types'
+import { useLocation, useNavigate } from "react-router-dom";
 
 const textAreaStyles = {
   primary: `bg-background flex text-grey-darker py-2 px-3 pl-12 pr-12 text-secondary border border-primary w-full h-12 outline-none text-lg resize-none rounded-lg max-h-64 overflow-y-auto shadow-2xl`,
+  secondary: `bg-background flex text-grey-darker py-2 px-3 pl-12 pr-12 text-secondary border border-primary w-full h-12 outline-none text-lg resize-none rounded-lg max-h-32 overflow-y-auto shadow-2xl`,
 }
 
 const buttonWrapper = `flex items-end bg-background rounded-lg border-0 px-1 font-bold text-primary absolute bottom-3 hover:text-secondary`
@@ -55,6 +57,9 @@ export const TextInput = ({ placeholder, textstyle }) => {
       setCurMessage('')
     }
   
+  const navigate = useNavigate()
+  const location = useLocation()
+  
   return(
     <div className="hero bg-gradient-dark h-auto flex flex-col">
       <div className="search-box mx-auto my-auto w-full">
@@ -76,6 +81,9 @@ export const TextInput = ({ placeholder, textstyle }) => {
           ></textarea>
           <span className={`${buttonWrapper} right-2`}>
             <IconButton onClick={async () => {
+              if (location.pathname === "/") {
+                navigate('/chat')
+              }
               sendMessage(curMessage)
               }}>
               {chatMutation.isPending ?<span className="loading loading-spinner"></span> :<AiOutlineSend size={28}/>} 
