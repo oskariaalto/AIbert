@@ -29,7 +29,7 @@ ChatBox.propTypes = {
 
 export default ChatBox
 
-/*
+/*          :)
     
     const testMessages = [
         {
