@@ -27,6 +27,7 @@ const router = createBrowserRouter([
     element: <NavBarWrapper />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/chat", element: <Chat />}
     ],
   }
 ]);

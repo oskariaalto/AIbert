@@ -11,7 +11,9 @@ export const DataContext = createContext({
     courseId: null,
     setCourseId: () => {},
     user: null,
-    setUser: () => {},
+    setUser: () => { },
+    idCount: 1,
+    setIdCount: () => {},
 });
 
 
@@ -20,9 +22,10 @@ export const DataProvider = ({ children }) => {
     const [hints, setHints] = useState([])
     const [courseId, setCourseId] = useState(null)
     const [user, setUser] = useState(null)
+    const [idCount, setIdCount] = useState(1)
 
     return (
-        <DataContext.Provider value={{ messages, setMessages, hints, setHints, courseId, setCourseId, user, setUser }}>
+        <DataContext.Provider value={{ messages, setMessages, hints, setHints, courseId, setCourseId, user, setUser, idCount, setIdCount }}>
             {children}
         </DataContext.Provider>
     )
