@@ -6,7 +6,6 @@ import { DataContext } from "../../context/DataContext";
 import { useMutation } from "@tanstack/react-query";
 import { sendChat } from "../../controllers/chat";
 import PropTypes from 'prop-types'
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const textAreaStyles = {
@@ -18,20 +17,18 @@ const buttonWrapper = `flex items-end bg-background rounded-lg border-0 px-1 fon
 
 export const TextInput = ({ placeholder, textstyle }) => {
     const textareaRef = useRef(null);
-    const { messages, setMessages, idCount, setIdCount } = useContext(DataContext);
+    const { dispatch } = useContext(DataContext);
 
     const chatMutation = useMutation({
       mutationFn: sendChat,
       mutationKey: 'sendChat',
       onSuccess: (data) => {
         console.log("success", data, data.data, data.data.answer)
-        setIdCount(idCount => idCount + 1)
         const element = {
           text: data.data.answer,
           isAnswer: true,
-          id: idCount
         }
-        setMessages([...messages, element])
+        dispatch({ type: 'ADD_MESSAGE', payload: element })
       },
       onError: (error) => {
         console.log(error)
@@ -57,32 +54,20 @@ export const TextInput = ({ placeholder, textstyle }) => {
       }
     };
   
-    const sendMessage = async (content, event) => {
+    const sendMessage = async (content) => {
       if (content === "")
         return
+      const message = {
+        "text": content,
+        "isAnswer": false
+      }
+      dispatch({ type: 'ADD_MESSAGE', payload: message })
+      setCurMessage('')
+      handleInput()
+      chatMutation.mutate({ content })
       if (location.pathname === "/") {
         navigate('/chat')
-        setIdCount(idCount => idCount + 1)
-        console.log(idCount)
-        const message = {
-          "text": content,
-          "id": idCount,
-          "isAnswer": false
-        }
-        setMessages(messages.concat(message))
-        setCurMessage('')
-      } else {
-        setIdCount(idCount => idCount + 1)
-        console.log(idCount)
-        const message = {
-          "text": content,
-          "id": idCount,
-          "isAnswer": false
-        }
-        setMessages(messages.concat(message))
-        setCurMessage('')
       }
-      chatMutation.mutate({ content })
     }
   
   const navigate = useNavigate()
@@ -109,7 +94,6 @@ export const TextInput = ({ placeholder, textstyle }) => {
           ></textarea>
           <span className={`${buttonWrapper} right-2`}>
             <IconButton onClick={async () => {
-              event.preventDefault()
               sendMessage(curMessage)
               }}>
               {chatMutation.isPending ? <span className="loading loading-spinner"></span> :<AiOutlineSend size={28}/>} 

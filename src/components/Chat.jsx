@@ -1,46 +1,10 @@
-import Card from './ui/cards/Card';
-import CardTitle from './ui/cards/CardTitle';
-import CardBody from './ui/cards/CardBody';
 import { TextInput } from './forms/TextInput';
-import { ChooseCourse, ChooseExercise } from './forms/ChooseCourse';
-import React, { useContext, useState } from 'react';
-import LatexRenderer from './RenderMarkdown';
 import ChatBox from './ui/chatbox/Chatbox';
-import { TextButton } from './ui/buttons/TextButton';
-import { LoadingButton } from './ui/buttons/LoadingButton';
-import { getHints, sendChat } from '../controllers/chat';
 import PropTypes from 'prop-types';
-import { DataContext, DataProvider } from '../context/DataContext';
-import axios from 'axios';
 
-export const Chat = ({ course, setCourse, exercises, setExercises, exercise, setExercise,
-  messages, setMessages, QuestionState, setQuestionState, history, setHistory, title, setTitle, courses }) => {
-
-  const [loading, setLoading] = useState(false)  
-  const [hints, setHints] = useState([])
-  const [hintCount, setHintCount] = useState(0)
-  const [chatId, setChatId] = useState(0)
-  const [disableHintsButton, setDisableHintsButton] = useState(false)
+export const Chat = () => {
 
   // Unused components from here were moved to below the Chat component
-  const value = useContext(DataContext)
-  
-  const sendMessage = async (message)=>{
-    console.log(messages)
-    setLoading(true)
-    const answer = await sendChat(message, chatId, exercise.id)
-    setLoading(false)
-    console.log(answer)
-    setChatId(answer.chatId)
-    const element = {
-      text: answer.answer,
-      isAnswer: true,
-      id: messages.length + 2
-    }
-    console.log(element)
-    // value.setMessages(value.messages.concat(element))
-    return element
-  }  
 
 // items-center  justify-center <div className='flex w-full h-full'>
   return (
@@ -48,10 +12,10 @@ export const Chat = ({ course, setCourse, exercises, setExercises, exercise, set
       <div className="w-3/4 my-20 ">
         <div className='container mx-auto p-4 h-full'>
           <div className='p-2 w-full h-5/6'>
-            <ChatBox messages={value.messages}/>
+            <ChatBox/>
           </div>
           <div className='p-2 w-full h-1/6'>
-            <TextInput placeholder='Ask AIbert...' messages={value.messages} setMessages={value.setMessages} loading={loading} onClick={sendMessage} textstyle={'secondary'}/>
+            <TextInput placeholder='Ask AIbert...'textstyle={'secondary'}/>
           </div>
         </div>
       </div>

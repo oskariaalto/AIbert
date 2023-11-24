@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types';
+
+
 export const AnswerBubble = ({ text }) => {
   return(
     <div className="chat chat-start w-auto h-auto">
@@ -6,4 +9,7 @@ export const AnswerBubble = ({ text }) => {
       </div>
     </div>
   )
+}
+AnswerBubble.propTypes = {
+  text: PropTypes.string
 }
