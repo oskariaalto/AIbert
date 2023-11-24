@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import PropTypes from 'prop-types'
 
-const textAreaStyles ={
-    answerBubble: `h-auto bg-secondary flex py-2 px-2 pl-4 font-normal w-full outline-none text-lg text-background resize-none min-h-12 rounded-lg text-left`,
-    questionBubble: `h-auto bg-primary flex py-2 px-2 pl-4 font-normal w-full outline-none text-lg text-background resize-none min-h-12 rounded-lg text-left`
+const BubbleStyles ={
+    //answerBubble: `h-auto bg-secondary flex py-2 px-2 pl-4 font-normal w-full outline-none text-lg text-background resize-none min-h-12 rounded-lg text-left`,
+    //questionBubble: `h-auto bg-primary flex py-2 px-2 pl-4 font-normal w-full outline-none text-lg text-background resize-none min-h-12 rounded-lg text-left
+    answerBubble: '<div class="chat chat-start">'
 }
 
 const divStyles = {
@@ -24,10 +25,11 @@ const ChatBubble = ({ text, id, isAnswer }) => {
     
     console.log(style)
     return (
+        
         <div className={divStyles[style]}>
             <textarea
                 readOnly
-                className={textAreaStyles[style]}
+                className={BubbleStyles[style]}
                 style={{ overflow:'hidden'}}
                 type="text"
                 id={`chatBubble-${id}`}
@@ -35,6 +37,7 @@ const ChatBubble = ({ text, id, isAnswer }) => {
             >
             </textarea>
         </div>
+        
     )
 }
 

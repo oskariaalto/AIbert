@@ -23,6 +23,7 @@ export const Chat = ({ course, setCourse, exercises, setExercises, exercise, set
   const [disableHintsButton, setDisableHintsButton] = useState(false)
 
   // Unused components from here were moved to below the Chat component
+  const value = useContext(DataContext)
   
   const sendMessage = async (message)=>{
     console.log(messages)
@@ -36,10 +37,10 @@ export const Chat = ({ course, setCourse, exercises, setExercises, exercise, set
       isAnswer: true,
       id: messages.length + 2
     }
+    console.log(element)
+    // value.setMessages(value.messages.concat(element))
     return element
   }  
-
-  const value = useContext(DataContext)
 
 // items-center  justify-center <div className='flex w-full h-full'>
   return (

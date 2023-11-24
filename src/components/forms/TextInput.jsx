@@ -6,6 +6,7 @@ import { DataContext } from "../../context/DataContext";
 import { useMutation } from "@tanstack/react-query";
 import { sendChat } from "../../controllers/chat";
 import PropTypes from 'prop-types'
+import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const textAreaStyles = {
@@ -17,14 +18,20 @@ const buttonWrapper = `flex items-end bg-background rounded-lg border-0 px-1 fon
 
 export const TextInput = ({ placeholder, textstyle }) => {
     const textareaRef = useRef(null);
-    const { messages, setMessages } = useContext(DataContext);
+    const { messages, setMessages, idCount, setIdCount } = useContext(DataContext);
 
     const chatMutation = useMutation({
       mutationFn: sendChat,
       mutationKey: 'sendChat',
       onSuccess: (data) => {
-        console.log("success")
-        setMessages([...messages, data.data])
+        console.log("success", data, data.data, data.data.answer)
+        setIdCount(idCount => idCount + 1)
+        const element = {
+          text: data.data.answer,
+          isAnswer: true,
+          id: idCount
+        }
+        setMessages([...messages, element])
       },
       onError: (error) => {
         console.log(error)
@@ -32,12 +39,12 @@ export const TextInput = ({ placeholder, textstyle }) => {
     })
 
     const [curMessage, setCurMessage] = useState('')
-    const [shift , setShift] = useState(false)
+    const [shift, setShift] = useState(false)
 
     const handleInput = () => {
-          textareaRef.current.style.height = '50px';
-          textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-  };
+      textareaRef.current.style.height = '50px';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    };
    
     const handleChange = (event) => {
       event.preventDefault();
@@ -45,16 +52,37 @@ export const TextInput = ({ placeholder, textstyle }) => {
       if( event.target.value.slice(-1) !== "\n" || shift){
         handleInput();
         setCurMessage(event.target.value);
-      } else if (event.target.value.slice(-1) === "\n" && !shift){
+      } else if (event.target.value.slice(-1) === "\n" && !shift) {
         sendMessage(curMessage)
       }
     };
   
-    const sendMessage = async (content) => {
+    const sendMessage = async (content, event) => {
       if (content === "")
         return
+      if (location.pathname === "/") {
+        navigate('/chat')
+        setIdCount(idCount => idCount + 1)
+        console.log(idCount)
+        const message = {
+          "text": content,
+          "id": idCount,
+          "isAnswer": false
+        }
+        setMessages(messages.concat(message))
+        setCurMessage('')
+      } else {
+        setIdCount(idCount => idCount + 1)
+        console.log(idCount)
+        const message = {
+          "text": content,
+          "id": idCount,
+          "isAnswer": false
+        }
+        setMessages(messages.concat(message))
+        setCurMessage('')
+      }
       chatMutation.mutate({ content })
-      setCurMessage('')
     }
   
   const navigate = useNavigate()
@@ -81,12 +109,10 @@ export const TextInput = ({ placeholder, textstyle }) => {
           ></textarea>
           <span className={`${buttonWrapper} right-2`}>
             <IconButton onClick={async () => {
-              if (location.pathname === "/") {
-                navigate('/chat')
-              }
+              event.preventDefault()
               sendMessage(curMessage)
               }}>
-              {chatMutation.isPending ?<span className="loading loading-spinner"></span> :<AiOutlineSend size={28}/>} 
+              {chatMutation.isPending ? <span className="loading loading-spinner"></span> :<AiOutlineSend size={28}/>} 
             </IconButton>
           </span>
         </form>
@@ -102,3 +128,18 @@ TextInput.propTypes = {
   onClick: PropTypes.func,
   loading: PropTypes.bool
 }
+
+
+/*
+      setIdCount(idCount + 1)
+      console.log(idCount)
+      const message = {
+        "text": content,
+        "id": idCount,
+        "isAnswer": false
+      }
+      axios.post("http://localhost:3001/messages", message).then(response => {
+        setMessages(response.data)
+        setCurMessage('')
+      })
+*/

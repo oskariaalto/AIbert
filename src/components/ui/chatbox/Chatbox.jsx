@@ -2,11 +2,36 @@ import CardBody from "../cards/CardBody";
 import { AnswerBubble } from "./AnswerBubble";
 import { QuestionBubble } from "./QuestionBubble";
 import PropTypes from 'prop-types'
+import axios from "axios";
+import { useContext } from "react";
+import { DataContext } from "../../../context/DataContext";
 
-const ChatBox = ({ messages }) => {
+const ChatBox = () => { 
 
-    console.log(messages)  
+    // axios.get("http://localhost:3001/messages").then(response => {
+    //    const messages = response.data
+    const { messages } = useContext(DataContext)
+    console.log(messages)
+    return(
+        <CardBody cardstyle={"chatbox"}>
+        {messages.map(message =>
+            <div key={message.id} className="h-auto w-auto p-1">
+                { message.isAnswer  ? <AnswerBubble text={message.text} /> : <QuestionBubble text={message.text} />}
+            </div>
+        )}
+        </CardBody>
+    )
+   // })
+}
 
+ChatBox.propTypes = {
+    messages: PropTypes.array
+}
+
+export default ChatBox
+
+/*
+    
     const testMessages = [
         {
             id: 1,
@@ -91,21 +116,4 @@ const ChatBox = ({ messages }) => {
              which is longer to see how longer messages behave,`
         },
     ]
-
-    return (
-        <CardBody cardstyle={"chatbox"}>
-            {testMessages.map(message =>
-                <div key={message.id} className="h-auto w-7/8 p-1">
-                    { message.isAnswer  ? <AnswerBubble text={message.text} /> : <QuestionBubble text={message.text} />}
-                </div>
-            )}
-        </CardBody>
-    )
-}
-
-ChatBox.propTypes = {
-    messages: PropTypes.array
-}
-
-
-export default ChatBox
+*/
