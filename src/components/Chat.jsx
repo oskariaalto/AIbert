@@ -1,16 +1,29 @@
 import { TextInput } from './forms/TextInput';
 import ChatBox from './ui/chatbox/Chatbox';
 import PropTypes from 'prop-types';
+import { Transition } from "@headlessui/react"
+import { useContext } from 'react';
+import { DataContext } from '../context/DataContext';
 
 export const Chat = () => {
 
   // Unused components from here were moved to below the Chat component
-
+  const { showChat } = useContext(DataContext)
 // items-center  justify-center <div className='flex w-full h-full'>
   return (
     <div className='w-full bg-site min-h-screen flex justify-center shadow-2xl'>
-      <div className="w-3/4 my-20 ">
-        <div className='container mx-auto p-4 h-full'>
+      <Transition
+      appear={true}
+      show={showChat}
+      enter="transition-transform duration-500 transform ease-in-out"
+      enterFrom="translate-x-full"
+      enterTo="translate-x-0"
+      leave="transition-transform duration-500 transform ease-in-out"
+      leaveFrom="translate-x-0"
+      leaveTo="translate-x-full"
+      className="w-full my-20"
+      >
+        <div className='container w-3/4 mx-auto p-4 h-full'>
           <div className='p-2 w-full h-5/6'>
             <ChatBox/>
           </div>
@@ -18,7 +31,7 @@ export const Chat = () => {
             <TextInput placeholder='Ask AIbert...'textstyle={'secondary'}/>
           </div>
         </div>
-      </div>
+      </Transition>
     </div>
   )
 }

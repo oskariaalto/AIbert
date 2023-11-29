@@ -10,7 +10,7 @@ import {
 
 const NavBarWrapper = () => {
   return (
-    <div className='font-serif'>
+    <div className='font-serif bg-site'>
       <NavBar />
       <Outlet />
     </div>
