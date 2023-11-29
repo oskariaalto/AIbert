@@ -1,14 +1,10 @@
 import Chat from './components/Chat';
-import { useState, useEffect } from 'react';
 import NavBar from './components/ui/navbars/NavBar';
-import History from './components/History';
-import Profile from './components/Profile';
 import Home from './components/Home';
-import { getUser } from './controllers/user.js'
+import Hints from './components/Hints';
 import {
   createBrowserRouter,
   RouterProvider,
-  useLoaderData,
   Outlet,
 } from "react-router-dom";
 
@@ -27,7 +23,8 @@ const router = createBrowserRouter([
     element: <NavBarWrapper />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/chat", element: <Chat />}
+      { path: "/chat", element: <Chat />},
+      { path: "/hints", element: <Hints />},
     ],
   }
 ]);
