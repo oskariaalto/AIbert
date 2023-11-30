@@ -13,6 +13,7 @@ export const Chat = () => {
   return (
     <div className='w-full bg-site h-screen flex justify-center shadow-2xl'>
       <Transition
+      as="div"
       appear={true}
       show={showChat}
       enter="transition-transform duration-500 transform ease-in-out"

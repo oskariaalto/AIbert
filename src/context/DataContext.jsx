@@ -26,12 +26,15 @@ export const DataProvider = ({ children }) => {
     const [courseId, setCourseId] = useState(null)
     const [user, setUser] = useState(null)
     const [idCount, setIdCount] = useState(1)
+    const [course, setCourse] = useState(null)
+    const [exercise, setExercise] = useState(null)
     const [showHome, setShowHome] = useState(true)
     const [showChat, setShowChat] = useState(true)
+    const [showHints, setShowHints] = useState(true)
     const [state, dispatch] = useReducer(combinedReducer, initialState);
 
     return (
-        <DataContext.Provider value={{ showHome, setShowHome, state, dispatch, showChat, setShowChat, hints, setHints, courseId, setCourseId, user, setUser, idCount, setIdCount }}>
+        <DataContext.Provider value={{course, setCourse,exercise, setExercise, showHints, setShowHints, showHome, setShowHome, state, dispatch, showChat, setShowChat, hints, setHints, courseId, setCourseId, user, setUser, idCount, setIdCount }}>
             {children}
         </DataContext.Provider>
     )

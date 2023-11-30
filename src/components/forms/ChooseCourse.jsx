@@ -1,11 +1,40 @@
+import { Collapse } from "../ui/Collapse"
 import { DropDown } from "../ui/dropdowns/DropDown"
 import PropTypes from 'prop-types'
+import { useContext, useState } from "react"
+import { DataContext } from "../../context/DataContext"
 
-export const ChooseCourse = ({ courses }) => {
+export const ChooseCourse = ({ courses, exercises }) => {
+
+  const { setCourse, setExercise, course, exercise } = useContext(DataContext)
+  const chooseTitle = () => {
+    if (course === null) {
+      return("Courses & Exercises")
+    } else if (exercise === null) {
+      return(`${course.name}`)
+    } else {
+      return(`${course.name}: ${exercise.name}`)
+    }
+  }
   
   return (
-      <DropDown id='coursePicker' label="Course">
-        <div className="space-y-2">
+    <DropDown id='coursePicker' label={chooseTitle()}>
+      <div className="space-y-2"> 
+        <div className="collapse-title bg-background text-secondary text-xl peer-checked:bg-secondary peer-checked:text-secondary-content hover:text-secondary">
+          <button onClick={() => { setCourse(null); setExercise(null); }}>
+            None
+          </button>
+        </div>
+          {courses.map((course, index) => (
+            <Collapse key={index} exercises={exercises} course={course}/>
+        ))}
+      </div> 
+    </DropDown>
+  )
+}
+
+/*
+<div className="space-y-2">
           {courses.map((course, index) => (
             <span
               key={index}
@@ -18,9 +47,7 @@ export const ChooseCourse = ({ courses }) => {
           </span>
         ))}
       </div> 
-    </DropDown>
-  )
-}
+*/
 
 export const ChooseExercise = ({exercises, handleclick, setExercise}) => {
   return(
