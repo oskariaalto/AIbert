@@ -17,7 +17,7 @@ const buttonWrapper = `flex items-end bg-background rounded-lg border-0 px-1 fon
 
 export const TextInput = ({ placeholder, textstyle }) => {
     const textareaRef = useRef(null);
-    const { dispatch } = useContext(DataContext);
+    const { setShowChat, setShowHome, dispatch } = useContext(DataContext);
 
     const chatMutation = useMutation({
       mutationFn: sendChat,
@@ -64,9 +64,13 @@ export const TextInput = ({ placeholder, textstyle }) => {
       dispatch({ type: 'ADD_MESSAGE', payload: message })
       setCurMessage('')
       handleInput()
-      chatMutation.mutate({ content })
+      //chatMutation.mutate({ content })
       if (location.pathname === "/") {
-        navigate('/chat')
+        setShowHome(false)
+        setShowChat(true)
+        setTimeout(() => {
+          navigate('/chat')
+        }, 500) 
       }
     }
   
@@ -94,6 +98,7 @@ export const TextInput = ({ placeholder, textstyle }) => {
           ></textarea>
           <span className={`${buttonWrapper} right-2`}>
             <IconButton onClick={async () => {
+              event.preventDefault()
               sendMessage(curMessage)
               }}>
               {chatMutation.isPending ? <span className="loading loading-spinner"></span> :<AiOutlineSend size={28}/>} 
