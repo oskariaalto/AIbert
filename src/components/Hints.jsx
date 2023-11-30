@@ -43,11 +43,11 @@ const Hints = () => {
             </div>
           </div>
           {/* Chat box and input container */}
-          <div className='flex-grow relative'> {/* Relative positioning for the container */}
-            <div className='absolute inset-0 overflow-y-auto'> {/* ChatBox will scroll within this container */}
+          <div className='flex-none relative h-3/4 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-scrollbar'> {/* Relative positioning for the container */}
+            <div className=''> {/* ChatBox will scroll within this container */}
               <ChatBox />
             </div>
-            <div className='absolute bottom-0 left-0 w-full'> {/* TextInput will enlarge upwards */}
+            <div className='sticky bottom-0 z-10 w-full'> {/* TextInput will enlarge upwards */}
               <TextInput placeholder='Ask AIbert...' textstyle="secondary"/>
             </div>
           </div>

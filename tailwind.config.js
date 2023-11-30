@@ -12,6 +12,8 @@ const colorTheme = {
     'secondary': '#D05A05' // light-brown
     ,
     'site': '#E7D79F' // vanilla
+    ,
+    'scrollbar': '#EFE0B1'
     }
   },
   redBlue: {
