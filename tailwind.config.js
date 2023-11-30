@@ -43,7 +43,7 @@ export default {
       lg: '0 8px 16px var(--tw-shadow-color)',
     },
   },
-  plugins: [daisyui, tailwindScrollbar,
+  plugins: [daisyui, tailwindScrollbar({ nocompatible: true }),
     plugin(function ({ matchUtilities, theme }) {
       matchUtilities(
         {

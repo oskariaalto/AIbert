@@ -3,7 +3,6 @@ import axios from "axios"
 const baseUrl = 'https://ai-bert-backend-qrwoug6p3q-lz.a.run.app'
 
 export const sendChat = ({ content }) => {
-    console.log(content)
     const body = {
       content: content,
       userId: 1

@@ -2,15 +2,17 @@ import CardBody from "../cards/CardBody";
 import { AnswerBubble } from "./AnswerBubble";
 import { QuestionBubble } from "./QuestionBubble";
 import PropTypes from 'prop-types'
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { DataContext } from "../../../context/DataContext";
 
 const ChatBox = () => { 
+    const endOfHintsRef = useRef(null);
+    const { state } = useContext(DataContext)
+    const messages = state.messages
+
 
     // axios.get("http://localhost:3001/messages").then(response => {
     //    const messages = response.data
-    const { state } = useContext(DataContext)
-    const messages = state.messages
     return(
         <CardBody cardstyle={"chatbox"}>
         {messages.map((message, index) =>
@@ -18,6 +20,7 @@ const ChatBox = () => {
                 { message.isAnswer  ? <AnswerBubble text={message.text} /> : <QuestionBubble text={message.text} />}
             </div>
         )}
+         <div className="p-6" ref={endOfHintsRef}/>
         </CardBody>
     )
    // })

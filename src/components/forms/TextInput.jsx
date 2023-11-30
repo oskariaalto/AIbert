@@ -1,4 +1,4 @@
-import { useState, useContext,useRef } from "react";
+import { useState, useContext,useRef, useEffect } from "react";
 import { FileInput } from "./FileInput";
 import { IconButton } from "../ui/buttons/IconButton";
 import { AiOutlineFileAdd, AiOutlineSend } from "react-icons/ai";
@@ -42,12 +42,15 @@ export const TextInput = ({ placeholder, textstyle }) => {
       textareaRef.current.style.height = '50px';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     };
+
+    useEffect(() => {
+      handleInput();
+    }, [curMessage]);
    
     const handleChange = (event) => {
       event.preventDefault();
       //console.log(event)
       if( event.target.value.slice(-1) !== "\n" || shift){
-        handleInput();
         setCurMessage(event.target.value);
       } else if (event.target.value.slice(-1) === "\n" && !shift) {
         sendMessage(curMessage)
@@ -63,7 +66,6 @@ export const TextInput = ({ placeholder, textstyle }) => {
       }
       dispatch({ type: 'ADD_MESSAGE', payload: message })
       setCurMessage('')
-      handleInput()
       //chatMutation.mutate({ content })
       if (location.pathname === "/") {
         setShowHome(false)

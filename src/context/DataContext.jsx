@@ -27,7 +27,7 @@ export const DataProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [idCount, setIdCount] = useState(1)
     const [showHome, setShowHome] = useState(true)
-    const [showChat, setShowChat] = useState(false)
+    const [showChat, setShowChat] = useState(true)
     const [state, dispatch] = useReducer(combinedReducer, initialState);
 
     return (

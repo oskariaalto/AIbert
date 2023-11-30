@@ -11,7 +11,7 @@ export const Chat = () => {
   const { showChat } = useContext(DataContext)
 // items-center  justify-center <div className='flex w-full h-full'>
   return (
-    <div className='w-full bg-site min-h-screen flex justify-center shadow-2xl'>
+    <div className='w-full bg-site h-screen flex justify-center shadow-2xl'>
       <Transition
       appear={true}
       show={showChat}
@@ -24,10 +24,10 @@ export const Chat = () => {
       className="w-full my-20"
       >
         <div className='container w-3/4 mx-auto p-4 h-full'>
-          <div className='p-2 w-full h-5/6'>
+          <div className='p-2 w-full h-11/12'>
             <ChatBox/>
           </div>
-          <div className='p-2 w-full h-1/6'>
+          <div className='p-2 w-full h-1/12'>
             <TextInput placeholder='Ask AIbert...'textstyle={'secondary'}/>
           </div>
         </div>

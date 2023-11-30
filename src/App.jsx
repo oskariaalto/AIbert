@@ -2,6 +2,7 @@ import Chat from './components/Chat';
 import NavBar from './components/ui/navbars/NavBar';
 import Home from './components/Home';
 import Hints from './components/Hints';
+import { MathJaxContext } from 'better-react-mathjax';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -31,8 +32,19 @@ const router = createBrowserRouter([
 
 
 const App = () => { 
+  const config = {
+    loader: { load: ['input/asciimath', 'output/svg'] },
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+    }
+  };
   return(
-    <RouterProvider router={router}/>
+    <MathJaxContext config={config}>
+      <RouterProvider router={router}/>
+    </MathJaxContext>
   )
 }
 
