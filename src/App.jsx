@@ -31,8 +31,6 @@ const router = createBrowserRouter([
 
 
 const App = () => { 
-  
- // previous background [#94a3b8] 
   return(
     <RouterProvider router={router}/>
   )
