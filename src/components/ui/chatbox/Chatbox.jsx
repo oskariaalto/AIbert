@@ -19,7 +19,7 @@ const ChatBox = () => {
             if (messages.length > 0) {
                 scrollToBottom();
             }
-        }, 10); // Adjust the delay as needed for your transition
+        }, 500); // Adjust the delay as needed for your transition
 
         return () => clearTimeout(timer);
     }, [messages])

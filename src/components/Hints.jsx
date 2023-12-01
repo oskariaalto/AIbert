@@ -7,7 +7,7 @@ import { DataContext } from '../context/DataContext';
 import { getHints } from '../controllers/chat';
 
 const Hints = () => {
-  const [hintCount, setHintCount] = useState(0);
+  const [hintCount, setHintCount] = useState(1);
   const [loading, setLoading ] = useState(false);
   const endOfHintsRef = useRef(null);
   const {showHints, state, dispatch} = useContext(DataContext)
@@ -18,7 +18,7 @@ const Hints = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (hintCount > 0) {
+      if (hintCount > 1) {
           scrollToBottom();
       }
   }, 10); // Adjust the delay as needed for your transition
