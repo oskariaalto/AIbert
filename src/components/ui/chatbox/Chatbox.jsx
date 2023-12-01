@@ -15,7 +15,13 @@ const ChatBox = () => {
     }
 
     useEffect(() => {
-        scrollToBottom()
+        const timer = setTimeout(() => {
+            if (messages.length > 0) {
+                scrollToBottom();
+            }
+        }, 10); // Adjust the delay as needed for your transition
+
+        return () => clearTimeout(timer);
     }, [messages])
 
     // axios.get("http://localhost:3001/messages").then(response => {

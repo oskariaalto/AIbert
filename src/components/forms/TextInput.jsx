@@ -17,7 +17,7 @@ const buttonWrapper = `flex items-end bg-background rounded-lg border-0 px-1 fon
 
 export const TextInput = ({ placeholder, textstyle }) => {
     const textareaRef = useRef(null);
-    const { setShowChat, setShowHome, dispatch } = useContext(DataContext);
+    const { setShowChat, setShowHome, dispatch, state } = useContext(DataContext);
 
     const chatMutation = useMutation({
       mutationFn: sendChat,
@@ -29,6 +29,7 @@ export const TextInput = ({ placeholder, textstyle }) => {
           isAnswer: true,
         }
         dispatch({ type: 'ADD_MESSAGE', payload: element })
+        dispatch({type: 'SET_CHATID', payload: data.data.chatId})
       },
       onError: (error) => {
         console.log(error)
@@ -66,7 +67,7 @@ export const TextInput = ({ placeholder, textstyle }) => {
       }
       dispatch({ type: 'ADD_MESSAGE', payload: message })
       setCurMessage('')
-      //chatMutation.mutate({ content })
+      chatMutation.mutate({ content, chatId: state.chatId, assignment: state.exercise, hints: state.hints })
       if (location.pathname === "/") {
         setShowHome(false)
         setShowChat(true)

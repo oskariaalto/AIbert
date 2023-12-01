@@ -1,36 +1,29 @@
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
+import PropTypes from 'prop-types'
 
 
 
-export const Collapse = ({ course, exercises }) => {
-  const { setExercise, setCourse} = useContext(DataContext)
-
+export const Collapse = ({ course }) => {
+  const { dispatch} = useContext(DataContext)
 
   return (
       <div className="collapse bg-base-site"> 
         <input type="checkbox" className="peer" /> 
-        <div className="collapse-title bg-background text-primary text-xl peer-checked:bg-primary peer-checked:text-background hover:bg-primary hover:text-secondary">
+        <div className="collapse-title bg-background text-primary text-lg peer-checked:bg-primary peer-checked:text-background hover:bg-primary hover:text-secondary"
+        onClick={()=> dispatch({type: 'SET_COURSE', payload: course})}>
           {course.name}
         </div>
         <div className="collapse-content bg-primary text-primary-content peer-checked:text-secondary">
             <div>
-              <span
-              className={`block px-4 py-2 text-background hover:text-secondary hover:bg-background rounded-lg cursor-pointer`}
-              onClick={() => { 
-                setExercise(null)
-                setCourse(course)
-              }} 
-              >
-                None
-              </span>
-              {exercises.map((exercise, index) => (
+              {course.assignments.map((exercise, index) => (
                 <span
                   key={index}
                   className={`block px-4 py-2 text-background hover:text-secondary hover:bg-background rounded-lg cursor-pointer`}
                   onClick={() => {
-                    setExercise(exercise)
-                    setCourse(course)
+                    dispatch({type: 'SET_COURSE', payload: course})
+                    dispatch({type: 'SET_EXERCISE', payload: exercise})
+                    console.log(exercise) 
                   }
                   }
                 >
@@ -42,4 +35,9 @@ export const Collapse = ({ course, exercises }) => {
       </div>
     
   )
+}
+
+Collapse.propTypes = {
+  course: PropTypes.object,
+  exercises: PropTypes.array,
 }

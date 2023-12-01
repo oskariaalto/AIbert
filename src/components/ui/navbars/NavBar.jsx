@@ -59,9 +59,9 @@ const NavBar = () => {
             {location.pathname === "/hints" ? "Chat" : "Hints"}
           </button>
         </div>
-        <div className='flex-inline justify-end absolute start-2/4 top-8 p-3'>
-          <ChooseCourse courses={[{ name: "Linis" }]} exercises={[{name: "Exercise 1"}]}/>
-        </div>
+  <div className='flex-inline justify-end absolute start-2/4 top-8 p-3'>
+          <ChooseCourse />
+          </div>
       </div>
     </div>
   )

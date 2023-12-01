@@ -1,32 +1,27 @@
 import { Collapse } from "../ui/Collapse"
 import { DropDown } from "../ui/dropdowns/DropDown"
 import PropTypes from 'prop-types'
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { DataContext } from "../../context/DataContext"
 
-export const ChooseCourse = ({ courses, exercises }) => {
+export const ChooseCourse = () => {
 
-  const { setCourse, setExercise, course, exercise } = useContext(DataContext)
+  const { state } = useContext(DataContext)
   const chooseTitle = () => {
-    if (course === null) {
+    if (state.course === null) {
       return("Courses & Exercises")
-    } else if (exercise === null) {
-      return(`${course.name}`)
+    } else if (state.exercise === null) {
+      return(`${state.course.name}`)
     } else {
-      return(`${course.name}: ${exercise.name}`)
+      return(`${state.course.name}: ${state.exercise.name}`)
     }
   }
-  
+  console.log(state)
   return (
     <DropDown id='coursePicker' label={chooseTitle()}>
       <div className="space-y-2"> 
-        <div className="collapse-title bg-background text-secondary text-xl peer-checked:bg-secondary peer-checked:text-secondary-content hover:text-secondary">
-          <button onClick={() => { setCourse(null); setExercise(null); }}>
-            None
-          </button>
-        </div>
-          {courses.map((course, index) => (
-            <Collapse key={index} exercises={exercises} course={course}/>
+          {state.user.userCourses.map((course, index) => (
+            <Collapse key={index} course={course.course}/>
         ))}
       </div> 
     </DropDown>
