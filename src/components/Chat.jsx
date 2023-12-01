@@ -24,13 +24,13 @@ export const Chat = () => {
       leaveTo="translate-x-full"
       className="w-full my-20"
       >
-        <div className='container w-3/4 mx-auto p-4 h-full'>
+        <div className='container w-3/4 mx-auto p-4 h-full overflow-y-auto'>
           <div className='p-2 w-full h-11/12'>
             <ChatBox/>
           </div>
-          <div className='p-2 w-full h-1/12'>
-            <TextInput placeholder='Ask AIbert...'textstyle={'secondary'}/>
-          </div>
+          <div className='sticky bottom-0 z-10 w-full'> {/* TextInput will enlarge upwards */}
+              <TextInput placeholder='Ask AIbert...' textstyle="secondary"/>
+            </div>
         </div>
       </Transition>
     </div>
